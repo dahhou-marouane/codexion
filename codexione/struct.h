@@ -6,11 +6,13 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 16:45:17 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/04 03:33:59 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/07 16:44:55 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
+#ifndef STRUCT_H
+# define STRUCT_H
+# include <pthread.h>
 
 typedef struct s_request
 {
@@ -31,7 +33,6 @@ typedef struct s_dongle
 	int							taken;
 	t_heap						heap;
 	pthread_mutex_t				*lock;
-	pthread_cond_t				*cond;
 	long						cooldown_end;
 }								t_dongle;
 
@@ -70,7 +71,6 @@ typedef struct s_ressources
 typedef struct s_coder
 {
 	int							id;
-	pthread_t					coder;
 	long						l_com_start;
 	int							compile_count;
 	t_dongle					*left;
@@ -88,7 +88,6 @@ typedef struct s_arguments
 	long						t_to_refactor;
 	int							nb_of_compiles_req;
 	long						dongle_cooldown;
-	char						*scheduler;
 	int							fifo;
 }								t_arguments;
 
@@ -112,9 +111,10 @@ typedef struct s_codexion
 
 	int							stop;
 	pthread_mutex_t				*stop_lock;
-	pthread_t					monitor;
 
 	pthread_mutex_t				*seq_lock;
 	int							seq;
 
 }								t_codexion;
+
+#endif

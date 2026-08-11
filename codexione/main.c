@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 13:26:13 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/03 06:08:40 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/07 16:47:22 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	main(int ac, char **av)
 
 	if (!ft_set_env(&codexion, ac, av))
 		return (1);
+	if (codexion.args->nb_of_compiles_req == 0)
+	{
+		ft_free_all(&codexion.ressources);
+		return (0);
+	}
 	if (!ft_start_sim(&codexion))
 	{
 		ft_free_all(&codexion.ressources);

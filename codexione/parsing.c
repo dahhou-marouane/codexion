@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 13:26:23 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/04 03:35:13 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/07 16:46:36 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	ft_save_args(int *arr, t_arguments *args, char *scheduler)
 	args->t_to_refactor = arr[4] * 1000;
 	args->nb_of_compiles_req = arr[5];
 	args->dongle_cooldown = arr[6] * 1000;
-	args->scheduler = scheduler;
 	if (strcmp("fifo", scheduler) == 0)
 		args->fifo = 1;
 	else
@@ -32,7 +31,7 @@ static int	ft_fifo_or_edf(char *s, int *arr, t_arguments *args)
 {
 	if (strcmp("fifo", s) != 0 && strcmp("edf", s) != 0)
 	{
-		ft_print_err("The last arg (scheduler) should be fifo or edf.");
+		ft_print_err_parsing(3);
 		return (0);
 	}
 	ft_save_args(arr, args, s);
@@ -59,55 +58,6 @@ static int	ft_atoi(char *str)
 	return ((int)res);
 }
 
-static int	ft_neg_zero_is_valid(char *s, int i)
-{
-	i++;
-	if (!s[i])
-	{
-		ft_print_err("The 7 first args should be positive integers.");
-		return (0);
-	}
-	while (s[i] == '0')
-		i++;
-	if (s[i])
-	{
-		ft_print_err("The 7 first args should be positive integers.");
-		return (0);
-	}
-	return (1);
-}
-
-static int	ft_digits_are_valid(char *s, int i)
-{
-	if (!s[i])
-	{
-		ft_print_err("The 7 first args should be positive integers.");
-		return (0);
-	}
-	while (s[i])
-	{
-		if (s[i] < '0' || s[i] > '9')
-		{
-			ft_print_err("The 7 first args should be positive integers.");
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-static int	ft_nb_is_valid(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s[i] == '-')
-		return (ft_neg_zero_is_valid(s, i));
-	if (s[i] == '+')
-		i++;
-	return (ft_digits_are_valid(s, i));
-}
-
 int	ft_parsing(char **av, t_arguments *args)
 {
 	int	i;
@@ -121,14 +71,14 @@ int	ft_parsing(char **av, t_arguments *args)
 		arr[i - 1] = ft_atoi(av[i]);
 		if (arr[i - 1] == -1)
 		{
-			ft_print_err("The 7 first args should fit in an int.");
+			ft_print_err_parsing(1);
 			return (0);
 		}
 		i++;
 	}
 	if (arr[0] == 0)
 	{
-		ft_print_err("number_of_coders must be greater than 0.");
+		ft_print_err_parsing(2);
 		return (0);
 	}
 	if (!ft_fifo_or_edf(av[8], arr, args))

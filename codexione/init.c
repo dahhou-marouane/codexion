@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 18:21:35 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/03 08:16:46 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/07 16:47:37 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	ft_init_dongles(t_codexion *codexion)
 		if (!codexion->dongles[i].heap.items)
 			return (0);
 		codexion->dongles[i].lock = ft_mutex_create(&codexion->ressources);
-		codexion->dongles[i].cond = ft_cond_create(&codexion->ressources);
-		if (!codexion->dongles[i].lock || !codexion->dongles[i].cond)
+		if (!codexion->dongles[i].lock)
 			return (0);
 		i++;
 	}
@@ -87,6 +86,8 @@ int	ft_init_coders(t_codexion *codexion)
 		codexion->coders[i].l_com_start = 0;
 		codexion->coders[i].compile_count = 0;
 		codexion->coders[i].lock = ft_mutex_create(&codexion->ressources);
+		if (!codexion->coders[i].lock)
+			return (0);
 		i++;
 	}
 	return (1);
