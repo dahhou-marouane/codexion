@@ -1,5 +1,5 @@
 NAME = codexion
-HEADER = codexione/codexion.h
+HEADER = codexione/codexion.h codexione/struct.h
 
 CFLAGS = -Wall -Wextra -Werror -pthread
 

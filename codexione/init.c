@@ -12,12 +12,29 @@
 
 #include "codexion.h"
 
+void	ft_init_null(t_codexion *codexion, int mode)
+{
+	if (mode == 1)
+	{
+		codexion->ressources.allocs = NULL;
+		codexion->ressources.threads = NULL;
+		codexion->ressources.mutexes = NULL;
+		codexion->ressources.conds = NULL;
+	}
+	else
+	{
+		codexion->dongles = NULL;
+		codexion->coders = NULL;
+		codexion->stop = 0;
+		codexion->seq = 0;
+		codexion->start = 0;
+		codexion->f_routine = 0;
+	}
+}
+
 int	ft_init_codexion(t_codexion *codexion)
 {
-	codexion->ressources.allocs = NULL;
-	codexion->ressources.threads = NULL;
-	codexion->ressources.mutexes = NULL;
-	codexion->ressources.conds = NULL;
+	ft_init_null(codexion, 1);
 	codexion->f_routine_lock = ft_mutex_create(&codexion->ressources);
 	codexion->seq_lock = ft_mutex_create(&codexion->ressources);
 	codexion->log_lock = ft_mutex_create(&codexion->ressources);
@@ -31,12 +48,7 @@ int	ft_init_codexion(t_codexion *codexion)
 	codexion->args = ft_malloc(sizeof(t_arguments), &codexion->ressources);
 	if (!codexion->args)
 		return (0);
-	codexion->dongles = NULL;
-	codexion->coders = NULL;
-	codexion->stop = 0;
-	codexion->seq = 0;
-	codexion->start = 0;
-	codexion->f_routine = 0;
+	ft_init_null(codexion, 2);
 	return (1);
 }
 

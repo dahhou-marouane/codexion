@@ -24,7 +24,6 @@ static void	ft_destroy_mutexes(t_mutexes_manager *mutexes)
 			ft_print_err("pthread_mutex_destroy");
 			return ;
 		}
-		free(mutexes);
 		mutexes = tmp;
 	}
 }
@@ -41,7 +40,6 @@ static void	ft_destroy_cond(t_cond_manager *conds)
 			ft_print_err("pthread_cond_destroy");
 			return ;
 		}
-		free(conds);
 		conds = tmp;
 	}
 }
@@ -58,7 +56,6 @@ static void	ft_join_threads(t_thread_manager *threads)
 			ft_print_err("pthread_join");
 			return ;
 		}
-		free(threads);
 		threads = tmp;
 	}
 }

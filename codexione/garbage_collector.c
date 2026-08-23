@@ -48,6 +48,7 @@ void	*ft_malloc(size_t size, t_ressources *ressources)
 	{
 		ft_print_err("Malloc.");
 		free(p);
+		free(new);
 		ft_free_all(ressources);
 		return (NULL);
 	}

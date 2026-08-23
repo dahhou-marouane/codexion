@@ -18,7 +18,7 @@ pthread_mutex_t	*ft_mutex_create(t_ressources *ressources)
 
 	if (!ressources)
 		return (NULL);
-	n_node = malloc(sizeof(t_mutexes_manager));
+	n_node = ft_malloc(sizeof(t_mutexes_manager), ressources);
 	if (!n_node)
 	{
 		ft_print_err("Malloc failed.");
@@ -28,7 +28,6 @@ pthread_mutex_t	*ft_mutex_create(t_ressources *ressources)
 	if (pthread_mutex_init(&n_node->lock, NULL) != 0)
 	{
 		ft_print_err("Pthread_mutex_init failed.");
-		free(n_node);
 		ft_free_all(ressources);
 		return (NULL);
 	}
@@ -43,7 +42,7 @@ pthread_cond_t	*ft_cond_create(t_ressources *ressources)
 
 	if (!ressources)
 		return (NULL);
-	n_node = malloc(sizeof(t_cond_manager));
+	n_node = ft_malloc(sizeof(t_cond_manager), ressources);
 	if (!n_node)
 	{
 		ft_print_err("Malloc failed.");
@@ -53,7 +52,6 @@ pthread_cond_t	*ft_cond_create(t_ressources *ressources)
 	if (pthread_cond_init(&n_node->cond, NULL) != 0)
 	{
 		ft_print_err("Pthread_cond_init failed.");
-		free(n_node);
 		ft_free_all(ressources);
 		return (NULL);
 	}
@@ -69,7 +67,7 @@ pthread_t	*ft_pthread_create(t_ressources *ressources, void *(*f)(void *),
 
 	if (!ressources)
 		return (NULL);
-	n_node = malloc(sizeof(t_thread_manager));
+	n_node = ft_malloc(sizeof(t_thread_manager), ressources);
 	if (!n_node)
 	{
 		ft_print_err("Malloc failed.");
@@ -79,7 +77,6 @@ pthread_t	*ft_pthread_create(t_ressources *ressources, void *(*f)(void *),
 	if (pthread_create(&n_node->thread, NULL, f, arg) != 0)
 	{
 		ft_print_err("Pthread_create failed.");
-		free(n_node);
 		return (NULL);
 	}
 	n_node->next = ressources->threads;

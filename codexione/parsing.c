@@ -15,12 +15,12 @@
 static void	ft_save_args(int *arr, t_arguments *args, char *scheduler)
 {
 	args->nb_of_coders = arr[0];
-	args->t_to_burnout = arr[1] * 1000;
-	args->t_to_compile = arr[2] * 1000;
-	args->t_to_debug = arr[3] * 1000;
-	args->t_to_refactor = arr[4] * 1000;
+	args->t_to_burnout = (long)arr[1] * 1000L;
+	args->t_to_compile = (long)arr[2] * 1000L;
+	args->t_to_debug = (long)arr[3] * 1000L;
+	args->t_to_refactor = (long)arr[4] * 1000L;
 	args->nb_of_compiles_req = arr[5];
-	args->dongle_cooldown = arr[6] * 1000;
+	args->dongle_cooldown = (long)arr[6] * 1000L;
 	if (strcmp("fifo", scheduler) == 0)
 		args->fifo = 1;
 	else
