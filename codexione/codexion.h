@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:55:45 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/07 16:49:20 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/25 04:21:41 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ pthread_t		*ft_pthread_create(t_ressources *ressources, void *(*f)(void *),
 					void *arg);
 
 void			ft_free_all(t_ressources *ressources);
-
+int				single_coder(t_coder *coder);
 int				ft_init_codexion(t_codexion *codexion);
 int				ft_init_dongles(t_codexion *codexion);
 int				ft_init_coders(t_codexion *codexion);

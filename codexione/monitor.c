@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/07 05:22:25 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/07 16:46:57 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/25 04:22:31 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,20 @@ void	*monitor_routine(void *arg)
 		ft_usleep(300, codexion);
 	}
 	return (NULL);
+}
+
+int	single_coder(t_coder *coder)
+{
+	pthread_mutex_lock(coder->codexion->start_lock);
+	while (!coder->codexion->start)
+		pthread_cond_wait(coder->codexion->start_cond,
+			coder->codexion->start_lock);
+	pthread_mutex_unlock(coder->codexion->start_lock);
+	if (coder->left == coder->right)
+	{
+		while (!ft_sim_is_stoped(coder->codexion))
+			usleep(1000);
+		return (0);
+	}
+	return (1);
 }

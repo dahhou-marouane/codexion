@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 18:28:59 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/25 01:19:06 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/25 04:21:02 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,11 @@ long	ft_get_key(t_coder *coder)
 {
 	long	key;
 
-	if (coder->codexion->args->fifo)
-	{
-		pthread_mutex_lock(coder->codexion->seq_lock);
-		key = coder->codexion->seq++;
-		pthread_mutex_unlock(coder->codexion->seq_lock);
-	}
-	else
-	{
-		pthread_mutex_lock(coder->lock);
-		key = coder->l_com_start + coder->codexion->args->t_to_burnout;
-		pthread_mutex_unlock(coder->lock);
-	}
+	pthread_mutex_lock(coder->codexion->seq_lock);
+	key = ((coder->codexion->args->fifo) * coder->codexion->seq++)
+		+ ((!coder->codexion->args->fifo) * (coder->l_com_start
+				+ coder->codexion->args->t_to_burnout));
+	pthread_mutex_unlock(coder->codexion->seq_lock);
 	return (key);
 }
 
@@ -63,17 +56,8 @@ void	*coder_routine(void *arg)
 	t_coder	*coder;
 
 	coder = (t_coder *)arg;
-	pthread_mutex_lock(coder->codexion->start_lock);
-	while (!coder->codexion->start)
-		pthread_cond_wait(coder->codexion->start_cond,
-			coder->codexion->start_lock);
-	pthread_mutex_unlock(coder->codexion->start_lock);
-	if (coder->left == coder->right)
-	{
-		while (!ft_sim_is_stoped(coder->codexion))
-			usleep(1000);
+	if (!single_coder(coder))
 		return (NULL);
-	}
 	if (coder->id % 2 == 0)
 		ft_usleep(coder->codexion->args->t_to_compile
 			+ coder->codexion->args->dongle_cooldown, coder->codexion);
