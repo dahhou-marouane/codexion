@@ -6,7 +6,7 @@
 /*   By: mdahhou <mdahhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 13:46:38 by mdahhou           #+#    #+#             */
-/*   Updated: 2026/08/07 16:53:38 by mdahhou          ###   ########.fr       */
+/*   Updated: 2026/08/25 04:47:24 by mdahhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ pthread_t	*ft_pthread_create(t_ressources *ressources, void *(*f)(void *),
 	if (!n_node)
 	{
 		ft_print_err("Malloc failed.");
-		ft_free_all(ressources);
 		return (NULL);
 	}
 	if (pthread_create(&n_node->thread, NULL, f, arg) != 0)
